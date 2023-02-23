@@ -5,8 +5,6 @@ import org.jgrapht.alg.interfaces.VertexCoverAlgorithm.VertexCover;
 import org.jgrapht.alg.vertexcover.GreedyVCImpl;
 import org.jgrapht.alg.vertexcover.RecursiveExactVCImpl;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -72,47 +70,29 @@ public class DominatingWithLibs {
         return Arrays.asList(vertexCover, approximateTimeElapsed, approximateMemoryUsed);
     }
 
+    public static void compareWithLibs(Graph<String, DefaultEdge> graph) {
+        List<Object> exact = exactDominatingSetWithLibs(graph);
+        List<Object> approximate = aproxDominatingSetWithLibs(graph);
+
+        System.out.println("------- Comparison -------");
+
+        // Compare time and space differences
+        double timeDifference = (double) exact.get(1) - (double) approximate.get(1);
+        long memoryDifference = (long) exact.get(2) - (long) approximate.get(2);
+        System.out.println("Time difference: " + timeDifference + " seconds");
+        System.out.println("Memory difference: " + memoryDifference + " MB");
+    }
+
     public static void main(String[] args) {
         // Create a graph
-        Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
-
-        // Add some vertices to the graph
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addVertex("C");
-        graph.addVertex("D");
-        graph.addVertex("E");
-        graph.addVertex("F");
-        graph.addVertex("G");
-        graph.addVertex("H");
-        graph.addVertex("I");
-
-        // Add some edges to the graph
-        graph.addEdge("A", "B");
-        graph.addEdge("A", "C");
-        graph.addEdge("B", "D");
-        graph.addEdge("C", "D");
-        graph.addEdge("D", "E");
-        graph.addEdge("E", "F");
-        graph.addEdge("E", "H");
-        graph.addEdge("F", "G");
-        graph.addEdge("A", "H");
-        graph.addEdge("H", "I");
-        graph.addEdge("B", "G");
-        graph.addEdge("C", "I");
+        Graph<String, DefaultEdge> graph = GraphGenerator.generateGraph(130, 0.3);
 
         System.out.println("--------------------");
-
-        System.out.println("Compute the Minimum Dominating Set of Graph:");
-        System.out.println(graph);
-
-        // Compute the minimum dominating set of the graph using exact algorithm
-        exactDominatingSetWithLibs(graph);
-
-        // Compute the minimum dominating set of the graph using approximate algorithm
-        aproxDominatingSetWithLibs(graph);
-
+        System.out.println("Compute the Minimum Dominating Set of a Graph");
         System.out.println("--------------------");
+
+        // Compare the results of the exact and approximate algorithms
+        compareWithLibs(graph);
 
         // Overall, the GreedyVCImpl algorithm is relatively efficient in both time and
         // space complexity, especially compared to the RecursiveExactVCImpl algorithm
@@ -120,6 +100,13 @@ public class DominatingWithLibs {
         // noted that the GreedyVCImpl algorithm may not always compute the exact
         // minimum vertex cover of the graph, since it uses a heuristic approach to
         // select the vertices for the vertex cover.
+
+        // The RecursiveExactVCImpl algorithm, on the other hand, always computes the
+        // exact minimum vertex cover of the graph, but it is much more computationally
+        // expensive than the GreedyVCImpl algorithm. Therefore, the GreedyVCImpl
+        // algorithm is a good choice for computing a vertex cover of a graph when the
+        // exact solution is not required, and the time and space complexity of the
+        // algorithm are important considerations.
 
     }
 }
