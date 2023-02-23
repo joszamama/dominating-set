@@ -6,6 +6,9 @@ import org.jgrapht.alg.vertexcover.RecursiveExactVCImpl;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Dominating {
 
     // The RecursiveExactVCImpl algorithm computes the exact minimum vertex cover of
@@ -21,7 +24,7 @@ public class Dominating {
     // vertex cover problem. The space used by the algorithm is proportional to the
     // number of nodes in this tree, which is exponential in the worst case.
 
-    public static void exactDominatingSet(Graph<String, DefaultEdge> graph) {
+    public static List<Object> exactDominatingSet(Graph<String, DefaultEdge> graph) {
         RecursiveExactVCImpl<String, DefaultEdge> exactAlgorithm = new RecursiveExactVCImpl<>(graph);
         long exactStartTime = System.nanoTime();
         exactAlgorithm.getVertexCover();
@@ -34,6 +37,8 @@ public class Dominating {
         System.out.println("Exact solution: " + exactAlgorithm.getVertexCover());
         System.out.println("Exact time elapsed: " + exactTimeElapsed + " nanoseconds");
         System.out.println("Exact memory used: " + exactMemoryUsed + " bytes");
+
+        return Arrays.asList(exactAlgorithm.getVertexCover(), exactTimeElapsed, exactMemoryUsed);
     }
 
     // The time complexity of the GreedyVCImpl algorithm is O(|E|), where |E| is the
@@ -46,7 +51,7 @@ public class Dominating {
     // a set of candidate vertices that have not yet been added to the vertex cover,
     // which could potentially include all the vertices in the graph.
 
-    public static void aproxDominatingSet(Graph<String, DefaultEdge> graph) {
+    public static List<Object> aproxDominatingSet(Graph<String, DefaultEdge> graph) {
         // Compute the vertex cover of the graph using the greedy algorithm
         GreedyVCImpl<String, DefaultEdge> approximateAlgorithm = new GreedyVCImpl<>(graph);
         long approximateStartTime = System.nanoTime();
@@ -60,10 +65,30 @@ public class Dominating {
         System.out.println("Approximate solution: " + approximateAlgorithm.getVertexCover());
         System.out.println("Approximate time elapsed: " + approximateTimeElapsed + " nanoseconds");
         System.out.println("Approximate memory used: " + approximateMemoryUsed + " bytes");
+
+        return Arrays.asList(approximateAlgorithm.getVertexCover(), approximateTimeElapsed, approximateMemoryUsed);
     }
 
-    public static void compareExactAndAprox(Graph<String, DefaultEdge> graph) {
+    public static void compareExactAndAprox(List<Object> exactSolution, List<Object> aproxSolution) {
+        if (exactSolution.get(0).equals(aproxSolution.get(0))) {
+            System.out.println("The solutions are the same");
+        } else {
+            System.out.println("The solutions are different");
+        }
 
+        if (exactSolution.get(1).equals(aproxSolution.get(1))) {
+            System.out.println("The time elapsed is the same");
+        } else {
+            System.out.println("The time elapsed is different, the difference is: "
+                    + ((long) exactSolution.get(1) - (long) aproxSolution.get(1)) + " nanoseconds");
+        }
+
+        if (exactSolution.get(2).equals(aproxSolution.get(2))) {
+            System.out.println("The memory used is the same");
+        } else {
+            System.out.println("The memory used is different, the difference is: "
+                    + ((long) exactSolution.get(2) - (long) aproxSolution.get(2)) + " bytes");
+        }
     }
 
     public static void main(String[] args) {
@@ -77,6 +102,9 @@ public class Dominating {
         graph.addVertex("D");
         graph.addVertex("E");
         graph.addVertex("F");
+        graph.addVertex("G");
+        graph.addVertex("H");
+        graph.addVertex("I");
 
         // Add some edges to the graph
         graph.addEdge("A", "B");
@@ -85,6 +113,12 @@ public class Dominating {
         graph.addEdge("C", "D");
         graph.addEdge("D", "E");
         graph.addEdge("E", "F");
+        graph.addEdge("E", "H");
+        graph.addEdge("F", "G");
+        graph.addEdge("A", "H");
+        graph.addEdge("H", "I");
+        graph.addEdge("B", "G");
+        graph.addEdge("C", "I");
 
         System.out.println("--------------------");
 
@@ -92,12 +126,15 @@ public class Dominating {
         System.out.println(graph);
 
         // Compute the minimum dominating set of the graph using exact algorithm
-        exactDominatingSet(graph);
+        List<Object> exactSolution = exactDominatingSet(graph);
 
         // Compute the minimum dominating set of the graph using approximate algorithm
-        aproxDominatingSet(graph);
+        List<Object> aproxSolution = aproxDominatingSet(graph);
 
         System.out.println("--------------------");
+
+        // Compare the results
+        compareExactAndAprox(exactSolution, aproxSolution);
 
         // Overall, the GreedyVCImpl algorithm is relatively efficient in both time and
         // space complexity, especially compared to the RecursiveExactVCImpl algorithm
