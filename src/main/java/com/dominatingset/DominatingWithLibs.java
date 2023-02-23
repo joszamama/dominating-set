@@ -35,6 +35,7 @@ public class DominatingWithLibs {
         // Print the results
         System.out.println("------- Exact vertex cover -------");
         System.out.println("Exact solution: " + exactAlgorithm.getVertexCover());
+        System.out.println("Exact solution dominant number: " + exactAlgorithm.getVertexCover().size());
         System.out.println("Exact time elapsed: " + exactTimeElapsed + " seconds");
         System.out.println("Exact memory used: " + exactMemoryUsed + " MB");
 
@@ -64,6 +65,7 @@ public class DominatingWithLibs {
         // Print the results
         System.out.println("------- Approximate vertex cover -------");
         System.out.println("Approximate solution: " + vertexCover);
+        System.out.println("Approximate solution dominant number: " + approximateAlgorithm.getVertexCover().size());
         System.out.println("Approximate time elapsed: " + approximateTimeElapsed + " seconds");
         System.out.println("Approximate memory used: " + approximateMemoryUsed + " MB");
 
@@ -85,7 +87,7 @@ public class DominatingWithLibs {
 
     public static void main(String[] args) {
         // Create a graph
-        Graph<String, DefaultEdge> graph = GraphGenerator.generateGraph(130, 0.3);
+        Graph<String, DefaultEdge> graph = GraphGenerator.generateGraph(100, 0.3);
 
         System.out.println("--------------------");
         System.out.println("Compute the Minimum Dominating Set of a Graph");
