@@ -1,6 +1,7 @@
 package com.dominatingset;
 
 import org.jgrapht.Graph;
+import org.jgrapht.alg.interfaces.VertexCoverAlgorithm.VertexCover;
 import org.jgrapht.alg.vertexcover.GreedyVCImpl;
 import org.jgrapht.alg.vertexcover.RecursiveExactVCImpl;
 import org.jgrapht.graph.DefaultEdge;
@@ -9,7 +10,7 @@ import org.jgrapht.graph.SimpleGraph;
 import java.util.Arrays;
 import java.util.List;
 
-public class Dominating {
+public class DominatingWithLibs {
 
     // The RecursiveExactVCImpl algorithm computes the exact minimum vertex cover of
     // a graph using a recursive branching strategy. The algorithm has an
@@ -25,19 +26,21 @@ public class Dominating {
     // number of nodes in this tree, which is exponential in the worst case.
 
     public static List<Object> exactDominatingSetWithLibs(Graph<String, DefaultEdge> graph) {
-        RecursiveExactVCImpl<String, DefaultEdge> exactAlgorithm = new RecursiveExactVCImpl<>(graph);
+        // Compute the vertex cover of the graph using the exact algorithm
         long exactStartTime = System.nanoTime();
+        RecursiveExactVCImpl<String, DefaultEdge> exactAlgorithm = new RecursiveExactVCImpl<>(graph);
+        VertexCover<String> vertexCover = exactAlgorithm.getVertexCover();
         long exactEndTime = System.nanoTime();
-        long exactTimeElapsed = exactEndTime - exactStartTime;
-        long exactMemoryUsed = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        double exactTimeElapsed = (exactEndTime - exactStartTime) / 1_000_000_000.0;
+        long exactMemoryUsed = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / (1024 * 1024);
 
         // Print the results
         System.out.println("------- Exact vertex cover -------");
         System.out.println("Exact solution: " + exactAlgorithm.getVertexCover());
-        System.out.println("Exact time elapsed: " + exactTimeElapsed + " nanoseconds");
-        System.out.println("Exact memory used: " + exactMemoryUsed + " bytes");
+        System.out.println("Exact time elapsed: " + exactTimeElapsed + " seconds");
+        System.out.println("Exact memory used: " + exactMemoryUsed + " MB");
 
-        return Arrays.asList(exactAlgorithm.getVertexCover(), exactTimeElapsed, exactMemoryUsed);
+        return Arrays.asList(vertexCover, exactTimeElapsed, exactMemoryUsed);
     }
 
     // The time complexity of the GreedyVCImpl algorithm is O(|E|), where |E| is the
@@ -52,20 +55,21 @@ public class Dominating {
 
     public static List<Object> aproxDominatingSetWithLibs(Graph<String, DefaultEdge> graph) {
         // Compute the vertex cover of the graph using the greedy algorithm
-        GreedyVCImpl<String, DefaultEdge> approximateAlgorithm = new GreedyVCImpl<>(graph);
         long approximateStartTime = System.nanoTime();
+        GreedyVCImpl<String, DefaultEdge> approximateAlgorithm = new GreedyVCImpl<>(graph);
+        VertexCover<String> vertexCover = approximateAlgorithm.getVertexCover();
         long approximateEndTime = System.nanoTime();
-        long approximateTimeElapsed = approximateEndTime - approximateStartTime;
-        long approximateMemoryUsed = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        double approximateTimeElapsed = (approximateEndTime - approximateStartTime) / 1_000_000_000.0;
+        long approximateMemoryUsed = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory())
+                / (1024 * 1024);
 
         // Print the results
         System.out.println("------- Approximate vertex cover -------");
-        System.out.println("Approximate solution: " + approximateAlgorithm.getVertexCover());
-        System.out.println("Approximate time elapsed: " + approximateTimeElapsed + " nanoseconds");
-        System.out.println("Approximate memory used: " + approximateMemoryUsed + " bytes");
+        System.out.println("Approximate solution: " + vertexCover);
+        System.out.println("Approximate time elapsed: " + approximateTimeElapsed + " seconds");
+        System.out.println("Approximate memory used: " + approximateMemoryUsed + " MB");
 
-        return Arrays.asList(approximateAlgorithm.getVertexCover(), approximateTimeElapsed, approximateMemoryUsed);
-
+        return Arrays.asList(vertexCover, approximateTimeElapsed, approximateMemoryUsed);
     }
 
     public static void main(String[] args) {
