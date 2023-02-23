@@ -30,10 +30,8 @@ public class Dominating {
         long exactMemoryUsed = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 
         // Print the results
-        System.out.println("Exact vertex cover:");
-        for (String vertex : exactAlgorithm.getVertexCover()) {
-            System.out.println(vertex);
-        }
+        System.out.println("------- Exact vertex cover -------");
+        System.out.println("Exact solution: " + exactAlgorithm.getVertexCover());
         System.out.println("Exact time elapsed: " + exactTimeElapsed + " nanoseconds");
         System.out.println("Exact memory used: " + exactMemoryUsed + " bytes");
     }
@@ -58,10 +56,8 @@ public class Dominating {
         long approximateMemoryUsed = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 
         // Print the results
-        System.out.println("Approximate vertex cover:");
-        for (String vertex : approximateAlgorithm.getVertexCover()) {
-            System.out.println(vertex);
-        }
+        System.out.println("------- Approximate vertex cover -------");
+        System.out.println("Approximate solution: " + approximateAlgorithm.getVertexCover());
         System.out.println("Approximate time elapsed: " + approximateTimeElapsed + " nanoseconds");
         System.out.println("Approximate memory used: " + approximateMemoryUsed + " bytes");
     }
@@ -90,13 +86,18 @@ public class Dominating {
         graph.addEdge("D", "E");
         graph.addEdge("E", "F");
 
+        System.out.println("--------------------");
+
+        System.out.println("Compute the Minimum Dominating Set of Graph:");
+        System.out.println(graph);
+
         // Compute the minimum dominating set of the graph using exact algorithm
         exactDominatingSet(graph);
 
-        System.out.println("--------------------");
-
         // Compute the minimum dominating set of the graph using approximate algorithm
         aproxDominatingSet(graph);
+
+        System.out.println("--------------------");
 
         // Overall, the GreedyVCImpl algorithm is relatively efficient in both time and
         // space complexity, especially compared to the RecursiveExactVCImpl algorithm
@@ -104,6 +105,6 @@ public class Dominating {
         // noted that the GreedyVCImpl algorithm may not always compute the exact
         // minimum vertex cover of the graph, since it uses a heuristic approach to
         // select the vertices for the vertex cover.
-        
+
     }
 }
