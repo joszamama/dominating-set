@@ -7,7 +7,21 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
 public class Dominating {
+
+    public static void dominatingSetOfGraph(Graph<String, DefaultEdge> graph) {
+        // Compute the minimum dominating set of the graph
+        RecursiveExactVCImpl<String, DefaultEdge> algorithm = new RecursiveExactVCImpl<>(graph);
+        VertexCover<String> vertexCover = algorithm.getVertexCover();
+
+        // Print the minimum dominating set
+        System.out.println("Minimum dominating set:");
+        for (String vertex : vertexCover) {
+            System.out.println(vertex);
+        }
+    }
+
     public static void main(String[] args) {
+        // Create a graph
         Graph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
 
         // Add some vertices to the graph
@@ -27,13 +41,6 @@ public class Dominating {
         graph.addEdge("E", "F");
 
         // Compute the minimum dominating set of the graph
-        RecursiveExactVCImpl<String, DefaultEdge> algorithm = new RecursiveExactVCImpl<>(graph);
-        VertexCover<String> vertexCover = algorithm.getVertexCover();
-
-        // Print the minimum dominating set
-        System.out.println("Minimum dominating set:");
-        for (String vertex : vertexCover) {
-            System.out.println(vertex);
-        }
+        dominatingSetOfGraph(graph);
     }
 }
