@@ -1,4 +1,4 @@
-package com.dominatingset;
+package com.dominatingset.extra.generators;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,6 +10,8 @@ import java.util.Scanner;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
+
+import com.dominatingset.extra.plotters.GraphPlotter;
 
 public class GraphGenerator {
 

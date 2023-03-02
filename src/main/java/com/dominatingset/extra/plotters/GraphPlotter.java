@@ -1,4 +1,4 @@
-package com.dominatingset;
+package com.dominatingset.extra.plotters;
 
 import java.util.Map;
 

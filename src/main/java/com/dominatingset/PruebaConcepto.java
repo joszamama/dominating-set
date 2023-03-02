@@ -3,7 +3,7 @@ package com.dominatingset;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mine {
+public class PruebaConcepto {
 
     private static boolean[][] graph;
     private static boolean[] visited;
