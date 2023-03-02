@@ -22,45 +22,37 @@ public class MDSP {
 
     public static void IteratedGreedy(boolean[][] graph, double REMOVE_VERTICES_PERCENTAGE,
             int MAX_ITERATIONS_WITHOUT_IMPROVEMENT) {
-        // D <- InitialSolution(G)
-        Set<Integer> startingSolution = InitialSolution(graph);
-        // Db <- LocalImprovement(D)
-        Set<Integer> incumbentSolution = LocalImprovement(startingSolution);
-        // i <- 0;
-        int i = 0;
 
-        // while i < MAX_ITERATIONS_WITHOUT_IMPROVEMENT do
-        while (i < MAX_ITERATIONS_WITHOUT_IMPROVEMENT) {
-            // Dd <- Destruction(Db, G)
-            Set<Integer> unfeasableSolution = Destruction(incumbentSolution, REMOVE_VERTICES_PERCENTAGE);
-            // Dr <- Reconstruction(Dd)
-            Set<Integer> feasibleSolution = Reconstruction(unfeasableSolution);
-            // Di <- LocalImprovement(Dr)
-            Set<Integer> minimalSolution = LocalImprovement(feasibleSolution);
+        Set<Integer> startingSolution = InitialSolution(graph); // D <- InitialSolution(G)
+        Set<Integer> incumbentSolution = LocalImprovement(startingSolution); // Db <- LocalImprovement(D)
+        int i = 0; // i <- 0;
 
-            // if |Di| < |Db| then
-            if (minimalSolution.size() < incumbentSolution.size()) {
-                // Db <- Di
-                incumbentSolution = minimalSolution;
-                // i <- 0
-                i = 0;
-                // else
-            } else {
-                // i <- i + 1
-                i++;
+        while (i < MAX_ITERATIONS_WITHOUT_IMPROVEMENT) { // while i < MAX_ITERATIONS_WITHOUT_IMPROVEMENT do
+            Set<Integer> unfeasableSolution = Destruction(incumbentSolution, REMOVE_VERTICES_PERCENTAGE); // Dd <- Destruction(Db, G)
+            Set<Integer> feasibleSolution = Reconstruction(unfeasableSolution); // Dr <- Reconstruction(Dd)
+            Set<Integer> minimalSolution = LocalImprovement(feasibleSolution); // Di <- LocalImprovement(Dr)
+
+            if (minimalSolution.size() < incumbentSolution.size()) { // if |Di| < |Db| then,
+                incumbentSolution = minimalSolution; // Db <- Di
+                i = 0; // i <- 0
+            } else { // else
+                i++; // i <- i + 1
             } // end if
         } // end while
-
-        // return Db
-        System.out.println(incumbentSolution);
+        System.out.println(incumbentSolution);// return Db
     }
 
     public static void main(String[] args) {
-
-        // create a graph
+        // define the adjacency matrix of the graph
         boolean[][] graph = new boolean[3][3];
 
+        // define the percentage of vertices to be removed in the destruction phase
+        double REMOVE_VERTICES_PERCENTAGE = 0.5;
+
+        // define the maximum number of iterations without improvement
+        int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 10;
+
         // run the algorithm
-        IteratedGreedy(graph, 0.5, 10);
+        IteratedGreedy(graph, REMOVE_VERTICES_PERCENTAGE, MAX_ITERATIONS_WITHOUT_IMPROVEMENT);
     }
 }
