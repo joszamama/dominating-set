@@ -1,6 +1,6 @@
-package com.dominatingset.extra.plotters;
+package com.dominatingset.functionalities.plotters;
 
-import com.dominatingset.extra.generators.AdjacencyMatrixGenerator;
+import com.dominatingset.functionalities.generators.AdjacencyMatrixGenerator;
 
 public class AdjacencyMatrixPlotter {
 
@@ -15,9 +15,8 @@ public class AdjacencyMatrixPlotter {
             System.out.println();
         }
     }
-    
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
         // create a new adjacency matrix
         boolean[][] adjMatrix = AdjacencyMatrixGenerator.generateMatrix(10, 0.5);
 

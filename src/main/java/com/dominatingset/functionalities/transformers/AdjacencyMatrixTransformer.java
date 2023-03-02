@@ -1,11 +1,11 @@
-package com.dominatingset.extra.transformers;
+package com.dominatingset.functionalities.transformers;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
-import com.dominatingset.extra.generators.AdjacencyMatrixGenerator;
-import com.dominatingset.extra.plotters.GraphPlotter;
+import com.dominatingset.functionalities.generators.AdjacencyMatrixGenerator;
+import com.dominatingset.functionalities.plotters.GraphPlotter;
 
 public class AdjacencyMatrixTransformer {
 
@@ -31,7 +31,6 @@ public class AdjacencyMatrixTransformer {
     }
 
     public static void main(String[] args) {
-
         // create a new adjacency matrix
         boolean[][] adjMatrix = AdjacencyMatrixGenerator.generateMatrix(10, 0.5);
 

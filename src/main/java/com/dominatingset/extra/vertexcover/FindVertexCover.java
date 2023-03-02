@@ -1,4 +1,4 @@
-package com.dominatingset.vertexcover;
+package com.dominatingset.extra.vertexcover;
 
 import java.util.List;
 import java.util.Arrays;
@@ -9,8 +9,8 @@ import org.jgrapht.alg.vertexcover.GreedyVCImpl;
 import org.jgrapht.alg.vertexcover.RecursiveExactVCImpl;
 import org.jgrapht.graph.DefaultEdge;
 
-import com.dominatingset.extra.generators.GraphGenerator;
-import com.dominatingset.extra.plotters.GraphPlotter;
+import com.dominatingset.functionalities.generators.GraphGenerator;
+import com.dominatingset.functionalities.plotters.GraphPlotter;
 
 public class FindVertexCover {
 

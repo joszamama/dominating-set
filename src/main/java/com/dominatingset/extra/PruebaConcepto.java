@@ -1,4 +1,4 @@
-package com.dominatingset;
+package com.dominatingset.extra;
 
 import java.util.ArrayList;
 import java.util.List;

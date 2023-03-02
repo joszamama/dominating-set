@@ -1,13 +1,13 @@
-package com.dominatingset.extra.transformers;
+package com.dominatingset.functionalities.transformers;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
-import com.dominatingset.extra.generators.GraphGenerator;
-import com.dominatingset.extra.plotters.AdjacencyMatrixPlotter;
+import com.dominatingset.functionalities.generators.GraphGenerator;
+import com.dominatingset.functionalities.plotters.AdjacencyMatrixPlotter;
 
 public class GraphTransformer {
-    
+
     // function for transforming a graph into an adjacency matrix
     public static boolean[][] graphToMatrix(Graph<Integer, DefaultEdge> graph) {
         // create a new adjacency matrix
