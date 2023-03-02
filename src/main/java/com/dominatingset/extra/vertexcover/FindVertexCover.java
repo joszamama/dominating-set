@@ -1,4 +1,4 @@
-package com.dominatingset;
+package com.dominatingset.extra.vertexcover;
 
 import java.util.List;
 import java.util.Arrays;
@@ -9,7 +9,10 @@ import org.jgrapht.alg.vertexcover.GreedyVCImpl;
 import org.jgrapht.alg.vertexcover.RecursiveExactVCImpl;
 import org.jgrapht.graph.DefaultEdge;
 
-public class Dominating {
+import com.dominatingset.functionalities.generators.GraphGenerator;
+import com.dominatingset.functionalities.plotters.GraphPlotter;
+
+public class FindVertexCover {
 
     public static List<Object> exactDominatingSet(Graph<Integer, DefaultEdge> graph) {
         // Compute the vertex cover of the graph using the exact algorithm

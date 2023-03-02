@@ -1,4 +1,4 @@
-package com.dominatingset;
+package com.dominatingset.functionalities.plotters;
 
 import java.util.Map;
 
@@ -7,8 +7,7 @@ import javax.swing.JFrame;
 import org.jgrapht.Graph;
 import org.jgrapht.ext.JGraphXAdapter;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
-
+import com.dominatingset.functionalities.generators.GraphGenerator;
 import com.mxgraph.layout.mxCircleLayout;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxConstants;
@@ -61,16 +60,7 @@ public class GraphPlotter {
 
     public static void main(String[] args) {
         // create a graph
-        Graph<Integer, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
-
-        // add vertices to the graph
-        graph.addVertex(1);
-        graph.addVertex(2);
-        graph.addVertex(3);
-
-        // add edges to the graph
-        graph.addEdge(1, 2);
-        graph.addEdge(1, 3);
+        Graph<Integer, DefaultEdge> graph = GraphGenerator.generateGraph(50, 0.05);
 
         // plot the graph
         plotUndirectedGraph(graph);
