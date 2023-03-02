@@ -2,6 +2,8 @@ package com.dominatingset;
 
 import java.util.Set;
 
+import com.dominatingset.functionalities.generators.AdjacencyMatrixGenerator;
+
 public class MDSP {
 
     public static Set<Integer> InitialSolution(boolean[][] graph) {
@@ -44,13 +46,13 @@ public class MDSP {
 
     public static void main(String[] args) {
         // define the adjacency matrix of the graph
-        boolean[][] graph = new boolean[3][3];
+        boolean[][] graph = AdjacencyMatrixGenerator.generateMatrix(50, 0.25);
 
         // define the percentage of vertices to be removed in the destruction phase
-        double REMOVE_VERTICES_PERCENTAGE = 0.5;
+        double REMOVE_VERTICES_PERCENTAGE = 0.1;
 
         // define the maximum number of iterations without improvement
-        int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 10;
+        int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 100;
 
         // run the algorithm
         IteratedGreedy(graph, REMOVE_VERTICES_PERCENTAGE, MAX_ITERATIONS_WITHOUT_IMPROVEMENT);
