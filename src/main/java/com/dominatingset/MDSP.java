@@ -35,13 +35,13 @@ public class MDSP {
     }
 
     public static void main(String[] args) {
-
+        // Instantiating the parameters
         boolean[][] graph = AdjacencyMatrixGenerator.generateMatrix(50, 0.25);
         double REMOVE_VERTICES_PERCENTAGE = 0.1;
         int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 100;
 
         // Instantiating the functions
-        Function<boolean[][], Set<Integer>> InitialSolution = com.dominatingset.components.InitialSolution::InitialSolution2;
+        Function<boolean[][], Set<Integer>> InitialSolution = com.dominatingset.components.InitialSolution::InitialSolution1;
         Function<Set<Integer>, Set<Integer>> LocalImprovement = com.dominatingset.components.LocalImprovement::LocalImprovement1;
         BiFunction<Set<Integer>, Double, Set<Integer>> Destruction = com.dominatingset.components.Destruction::Destruction1;
         Function<Set<Integer>, Set<Integer>> Reconstruction = com.dominatingset.components.Reconstruction::Reconstruction1;
