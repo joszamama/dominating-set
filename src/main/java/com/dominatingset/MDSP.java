@@ -41,7 +41,7 @@ public class MDSP {
         // Instantiating the functions
         Function<Graph, Set<Integer>> GreedyInsertion = com.dominatingset.components.InitialSolution::greedyInsertion;
         Function<Set<Integer>, Set<Integer>> Exchange = com.dominatingset.components.LocalImprovement::exchange;
-        BiFunction<Set<Integer>, Double, Set<Integer>> Destruction = com.dominatingset.components.Destruction::Destruction1;
+        BiFunction<Set<Integer>, Double, Set<Integer>> RandomDestruction = com.dominatingset.components.Destruction::randomDestruction;
         Function<Set<Integer>, Set<Integer>> Reconstruction = com.dominatingset.components.Reconstruction::Reconstruction1;
 
         // Get time before the algorithm
@@ -49,7 +49,7 @@ public class MDSP {
 
         // Calling the Iterated Greedy algorithm
         IteratedGreedy(graph, REMOVE_VERTICES_PERCENTAGE, MAX_ITERATIONS_WITHOUT_IMPROVEMENT, GreedyInsertion,
-        Exchange, Destruction, Reconstruction);
+                Exchange, RandomDestruction, Reconstruction);
 
         // Get time after the algorithm
         long endTime = System.currentTimeMillis();

@@ -55,37 +55,4 @@ public class InitialSolution {
         return dominatedVertices;
     }
 
-    public static void main(String[] args) {
-        // set initial time for measuring runtime
-        long readStartTime = System.nanoTime();
-
-        // create graph from file
-        Graph graph = new Graph("astro-ph.txt");
-
-        // set final time for measuring runtime
-        long readEndTime = System.nanoTime();
-
-        // print runtime in seconds
-        System.out.println("Read runtime: " + (readEndTime - readStartTime) / 1000000000.0 + "s");
-
-        // pirnt graph information
-        System.out.println("Number of vertices: " + graph.getNumberOfVertices());
-        System.out.println("Number of leaf vertices: " + graph.getLeafVertices().size());
-        System.out.println("Number of support vertices: " + graph.getSupportVertices().size());
-        System.out.println("Number of best vertices: " + graph.getBestVertices().size());
-
-        // set initial time for measuring runtime
-        long startTime = System.nanoTime();
-
-        // generate initial solution
-        Set<Integer> initialSolution = greedyInsertion(graph);
-
-        // set final time for measuring runtime
-        long endTime = System.nanoTime();
-
-        // print runtime in seconds
-        System.out.println("Runtime: " + (endTime - startTime) / 1000000000.0 + "s");
-        System.out.println("Initial solution: " + initialSolution);
-    }
-
 }
