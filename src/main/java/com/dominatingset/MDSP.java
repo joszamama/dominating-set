@@ -4,13 +4,11 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import com.dominatingset.functionalities.generators.AdjacencyMatrixGenerator;
-
 public class MDSP {
 
-    public static void IteratedGreedy(boolean[][] graph, double REMOVE_VERTICES_PERCENTAGE,
+    public static void IteratedGreedy(Graph graph, double REMOVE_VERTICES_PERCENTAGE,
             int MAX_ITERATIONS_WITHOUT_IMPROVEMENT,
-            Function<boolean[][], Set<Integer>> InitialSolution,
+            Function<Graph, Set<Integer>> InitialSolution,
             Function<Set<Integer>, Set<Integer>> LocalImprovement,
             BiFunction<Set<Integer>, Double, Set<Integer>> Destruction,
             Function<Set<Integer>, Set<Integer>> Reconstruction) {
@@ -20,7 +18,7 @@ public class MDSP {
         int i = 0; // i <- 0;
 
         while (i < MAX_ITERATIONS_WITHOUT_IMPROVEMENT) { // while i < MAX_ITERATIONS_WITHOUT_IMPROVEMENT do
-            Set<Integer> unfeasableSolution = Destruction.apply(incumbentSolution, REMOVE_VERTICES_PERCENTAGE); // Dd <- Destruction(Db, REMOVE_VERTICES_PERCENTAGE)
+            Set<Integer> unfeasableSolution = Destruction.apply(incumbentSolution, REMOVE_VERTICES_PERCENTAGE);
             Set<Integer> feasibleSolution = Reconstruction.apply(unfeasableSolution); // Dr <- Reconstruction(Dd)
             Set<Integer> minimalSolution = LocalImprovement.apply(feasibleSolution); // Di <- LocalImprovement(Dr)
 
@@ -36,18 +34,27 @@ public class MDSP {
 
     public static void main(String[] args) {
         // Instantiating the parameters
-        boolean[][] graph = AdjacencyMatrixGenerator.generateMatrix(50, 0.25);
+        Graph graph = new Graph("adjmatrix.txt");
         double REMOVE_VERTICES_PERCENTAGE = 0.1;
         int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 100;
 
         // Instantiating the functions
-        Function<boolean[][], Set<Integer>> InitialSolution = com.dominatingset.components.InitialSolution::InitialSolution1;
+        Function<Graph, Set<Integer>> greedyInsertion = com.dominatingset.components.InitialSolution::greedyInsertion;
         Function<Set<Integer>, Set<Integer>> LocalImprovement = com.dominatingset.components.LocalImprovement::LocalImprovement1;
         BiFunction<Set<Integer>, Double, Set<Integer>> Destruction = com.dominatingset.components.Destruction::Destruction1;
         Function<Set<Integer>, Set<Integer>> Reconstruction = com.dominatingset.components.Reconstruction::Reconstruction1;
 
+        // Get time before the algorithm
+        long startTime = System.currentTimeMillis();
+
         // Calling the Iterated Greedy algorithm
-        IteratedGreedy(graph, REMOVE_VERTICES_PERCENTAGE, MAX_ITERATIONS_WITHOUT_IMPROVEMENT, InitialSolution,
+        IteratedGreedy(graph, REMOVE_VERTICES_PERCENTAGE, MAX_ITERATIONS_WITHOUT_IMPROVEMENT, greedyInsertion,
                 LocalImprovement, Destruction, Reconstruction);
+
+        // Get time after the algorithm
+        long endTime = System.currentTimeMillis();
+
+        // Print the time it took to run the algorithm
+        System.out.println("It took " + (endTime - startTime) + " milliseconds");
     }
 }
