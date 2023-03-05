@@ -8,8 +8,6 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import com.dominatingset.Graph;
-import com.dominatingset.functionalities.generators.AdjacencyMatrixGenerator;
-import com.dominatingset.functionalities.transformers.AdjacencyMatrixTransformer;
 
 public class AdjacencyListFinder {
 
@@ -104,11 +102,10 @@ public class AdjacencyListFinder {
     }
 
     public static void main(String[] args) {
-        boolean[][] adjMatrix = AdjacencyMatrixGenerator.generateMatrix(10000, 0.5);
-        List<Integer>[] adjList = AdjacencyMatrixTransformer.matrixToAdjacencyList(adjMatrix);
-        List<Set<Integer>> leafAndSupportVertices = findLeafAndSupportVertices(adjList);
+        Graph graph = new Graph("massive.txt");
 
-        System.out.println("Leaf vertices: " + leafAndSupportVertices.get(0));
-        System.out.println("Support vertices: " + leafAndSupportVertices.get(1));
+        System.out.println("Leaf vertices: " + graph.getLeafVertices());
+        System.out.println("Support vertices: " + graph.getSupportVertices());
+
     }
 }

@@ -10,7 +10,7 @@ public class AdjacencyMatrixReader {
 
     public static boolean[][] readMatrix(String filename) {
         boolean[][] adjMatrix = null;
-        try (Scanner scanner = new Scanner(new File("./src/main/java/com/dominatingset/files/adjmatrix/" + filename))) {
+        try (Scanner scanner = new Scanner(new File("./src/main/java/com/dominatingset/files/" + filename))) {
             // Read the first line to determine the size of the matrix
             String firstLine = scanner.nextLine();
             int nodes = firstLine.split(" ").length;
@@ -39,7 +39,7 @@ public class AdjacencyMatrixReader {
 
     public static void main(String[] args) {
         // Read the adjacency matrix from a file
-        boolean[][] adjMatrix = readMatrix("adjmatrix.txt");
+        boolean[][] adjMatrix = readMatrix("small.txt");
 
         // Plot the adjacency matrix
         AdjacencyMatrixPlotter.plotMatrix(adjMatrix);

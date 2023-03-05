@@ -10,7 +10,7 @@ public class AdjacencyMatrixWriter {
 
     public static void writeMatrix(boolean[][] adjMatrix, String filename) {
         try (PrintWriter writer = new PrintWriter(
-                new FileWriter("./src/main/java/com/dominatingset/files/adjmatrix/" + filename))) {
+                new FileWriter("./src/main/java/com/dominatingset/files/" + filename))) {
             for (int i = 0; i < adjMatrix.length; i++) {
                 writer.print(adjMatrix[i][0] ? 1 : 0);
                 for (int j = 1; j < adjMatrix[i].length; j++) {
@@ -29,7 +29,7 @@ public class AdjacencyMatrixWriter {
         boolean[][] adjMatrix = AdjacencyMatrixGenerator.generateMatrix(50, 0.25);
 
         // Write the graph to a file
-        writeMatrix(adjMatrix, "adjmatrix.txt");
+        writeMatrix(adjMatrix, "small.txt");
     }
 
 }

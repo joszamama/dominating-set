@@ -8,7 +8,6 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
 import com.dominatingset.functionalities.generators.AdjacencyMatrixGenerator;
-import com.dominatingset.functionalities.plotters.GraphPlotter;
 
 public class AdjacencyMatrixTransformer {
 
@@ -55,12 +54,6 @@ public class AdjacencyMatrixTransformer {
     public static void main(String[] args) {
         // create a new adjacency matrix
         boolean[][] adjMatrix = AdjacencyMatrixGenerator.generateMatrix(10, 0.5);
-
-        // transform the adjacency matrix into a graph
-        Graph<Integer, DefaultEdge> graph = matrixToGraph(adjMatrix);
-
-        // Plot the graph
-        GraphPlotter.plotUndirectedGraph(graph);
 
         // transform the adjacency matrix into a adjacency list
         List<Integer>[] adjList = matrixToAdjacencyList(adjMatrix);

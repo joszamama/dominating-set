@@ -34,13 +34,13 @@ public class MDSP {
 
     public static void main(String[] args) {
         // Instantiating the parameters
-        Graph graph = new Graph("adjmatrix.txt");
+        Graph graph = new Graph("small.txt");
         double REMOVE_VERTICES_PERCENTAGE = 0.1;
         int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 100;
 
         // Instantiating the functions
-        Function<Graph, Set<Integer>> greedyInsertion = com.dominatingset.components.InitialSolution::greedyInsertion;
-        Function<Set<Integer>, Set<Integer>> LocalImprovement = com.dominatingset.components.LocalImprovement::LocalImprovement1;
+        Function<Graph, Set<Integer>> GreedyInsertion = com.dominatingset.components.InitialSolution::greedyInsertion;
+        Function<Set<Integer>, Set<Integer>> Exchange = com.dominatingset.components.LocalImprovement::exchange;
         BiFunction<Set<Integer>, Double, Set<Integer>> Destruction = com.dominatingset.components.Destruction::Destruction1;
         Function<Set<Integer>, Set<Integer>> Reconstruction = com.dominatingset.components.Reconstruction::Reconstruction1;
 
@@ -48,8 +48,8 @@ public class MDSP {
         long startTime = System.currentTimeMillis();
 
         // Calling the Iterated Greedy algorithm
-        IteratedGreedy(graph, REMOVE_VERTICES_PERCENTAGE, MAX_ITERATIONS_WITHOUT_IMPROVEMENT, greedyInsertion,
-                LocalImprovement, Destruction, Reconstruction);
+        IteratedGreedy(graph, REMOVE_VERTICES_PERCENTAGE, MAX_ITERATIONS_WITHOUT_IMPROVEMENT, GreedyInsertion,
+        Exchange, Destruction, Reconstruction);
 
         // Get time after the algorithm
         long endTime = System.currentTimeMillis();

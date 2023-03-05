@@ -47,12 +47,16 @@ public class Graph {
         return bestVertices;
     }
 
+    public List<Integer> getNeighbors(Integer vertex) {
+        return adjacencyList[vertex];
+    }
+
     public Integer getNumberOfVertices() {
         return adjacencyList.length;
     }
 
     public static void main(String[] args) {
-        Graph graph = new Graph("adjmatrix.txt");
+        Graph graph = new Graph("small.txt");
 
         System.out.println("Number of vertices: " + graph.getNumberOfVertices());
         System.out.println("Leaf vertices: " + graph.getLeafVertices());
