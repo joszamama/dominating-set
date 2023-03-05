@@ -4,7 +4,7 @@ import java.util.Set;
 
 public class LocalImprovement {
 
-    public static Set<Integer> LocalImprovement1(Set<Integer> minimalSolution) {
+    public static Set<Integer> exchange(Set<Integer> minimalSolution) {
         return null;
     }
 

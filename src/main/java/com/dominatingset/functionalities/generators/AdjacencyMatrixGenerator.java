@@ -1,7 +1,5 @@
 package com.dominatingset.functionalities.generators;
 
-import com.dominatingset.functionalities.plotters.AdjacencyMatrixPlotter;
-import com.dominatingset.functionalities.readers.AdjacencyMatrixReader;
 import com.dominatingset.functionalities.writers.AdjacencyMatrixWriter;
 
 public class AdjacencyMatrixGenerator {
@@ -24,15 +22,9 @@ public class AdjacencyMatrixGenerator {
 
     public static void main(String[] args) {
         // Generate a graph
-        boolean[][] adjMatrix = generateMatrix(50, 0.25);
+        boolean[][] adjMatrix = generateMatrix(15000, 0.10);
 
         // Write the graph to a file
-        AdjacencyMatrixWriter.writeMatrix(adjMatrix, "adjmatrix.txt");
-
-        // Read the graph from a file
-        boolean[][] adjMatrix2 = AdjacencyMatrixReader.readMatrix("adjmatrix.txt");
-
-        // Plot the adjacency matrix
-        AdjacencyMatrixPlotter.plotMatrix(adjMatrix2);
+        AdjacencyMatrixWriter.writeMatrix(adjMatrix, "massive.txt");
     }
 }
