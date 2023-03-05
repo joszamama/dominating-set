@@ -18,7 +18,6 @@ public class InitialSolution {
                 initialSolution.add(vertex);
             }
         }
-        System.out.println("Initial insertion solution: " + initialSolution);
         return initialSolution;
     }
 }
