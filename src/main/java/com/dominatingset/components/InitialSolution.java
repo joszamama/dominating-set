@@ -55,4 +55,8 @@ public class InitialSolution {
         return dominatedVertices;
     }
 
+    public static Set<Integer> greedyDeletion(Graph graph) {
+        return null;
+    }
+
 }

@@ -24,7 +24,7 @@ public class Graph {
         leafVertices = leafAndSupportVertices.get(0);
         supportVertices = leafAndSupportVertices.get(1);
 
-        bestVertices = AdjacencyListFinder.getKVertices(adjacencyList, 25, "TOP");
+        bestVertices = AdjacencyListFinder.getKVertices(adjacencyList, 1500, "TOP");
     }
 
     public boolean[][] getAdjacencyMatrix() {
@@ -56,7 +56,7 @@ public class Graph {
     }
 
     public static void main(String[] args) {
-        Graph graph = new Graph("small.txt");
+        Graph graph = new Graph("astro-ph.txt");
 
         System.out.println("Number of vertices: " + graph.getNumberOfVertices());
         System.out.println("Leaf vertices: " + graph.getLeafVertices());
