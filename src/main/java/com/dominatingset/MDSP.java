@@ -57,7 +57,7 @@ public class MDSP {
         // Get time after the algorithm
         long endTime = System.currentTimeMillis();
 
-        // Print the time it took to run the algorithm
-        System.out.println("It took " + (endTime - startTime) + " milliseconds");
+        // Print the time it took to run the algorithm in seconds
+        System.out.println("Time: " + (endTime - startTime) / 1000.0 + " seconds");
     }
 }
