@@ -55,21 +55,8 @@ public class InitialSolution {
         return dominatedVertices;
     }
 
-    public static void main(String[] args) {
-        Graph graph = new Graph("massive.txt");
-
-        // set initial time for measuring runtime
-        long startTime = System.nanoTime();
-
-        // generate initial solution
-        Set<Integer> initialSolution = greedyInsertion(graph);
-
-        // set final time for measuring runtime
-        long endTime = System.nanoTime();
-
-        // print runtime in seconds
-        System.out.println("Runtime: " + (endTime - startTime) / 1000000000.0 + "s");
-        System.out.println("Initial solution: " + initialSolution);
+    public static Set<Integer> greedyDeletion(Graph graph) {
+        return null;
     }
 
 }
