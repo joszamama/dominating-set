@@ -4,6 +4,8 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import com.dominatingset.components.Destruction;
+
 public class MDSP {
 
     public static void IteratedGreedy(Graph graph, double REMOVE_VERTICES_PERCENTAGE,
@@ -37,11 +39,12 @@ public class MDSP {
         Graph graph = new Graph("small.txt");
         double REMOVE_VERTICES_PERCENTAGE = 0.1;
         int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 100;
+        Destruction destruction = new Destruction(graph);
 
         // Instantiating the functions
         Function<Graph, Set<Integer>> GreedyInsertion = com.dominatingset.components.InitialSolution::greedyInsertion;
         Function<Set<Integer>, Set<Integer>> Exchange = com.dominatingset.components.LocalImprovement::exchange;
-        BiFunction<Set<Integer>, Double, Set<Integer>> RandomDestruction = com.dominatingset.components.Destruction::randomDestruction;
+        BiFunction<Set<Integer>, Double, Set<Integer>> RandomDestruction = destruction::randomDestruction;
         Function<Set<Integer>, Set<Integer>> Reconstruction = com.dominatingset.components.Reconstruction::Reconstruction1;
 
         // Get time before the algorithm

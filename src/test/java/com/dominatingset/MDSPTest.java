@@ -2,6 +2,7 @@ package com.dominatingset;
 
 import java.util.Set;
 
+import com.dominatingset.components.Destruction;
 import com.dominatingset.components.InitialSolution;
 
 public class MDSPTest {
@@ -43,26 +44,29 @@ public class MDSPTest {
         long ISEndTime = System.nanoTime();
 
         // print runtime in seconds
-        System.out.println("Initial solution runtime: " + (ISEndTime - ISStartTime) / 1000000000.0 + "s");
-        System.out.println("Initial solution size: " + initialSolution.size());
+        System.out.println("GreedyInsertion runtime: " + (ISEndTime - ISStartTime) / 1000000000.0 + "s");
+        System.out.println("GreedyInsertion solution size: " + initialSolution.size());
 
-        System.out.println("---------------------- GreedyDeletion runtime ----------------------");
+        System.out.println("---------------------- LocalSearch runtime ----------------------");
 
-        // copy graph
-        Graph graph2 = new Graph(graph);
+        System.out.println("---------------------- GreedyDestruction runtime ----------------------");
+
+        Destruction destruction2 = new Destruction(graph);
 
         // set initial time for measuring runtime
-        long ISStartTime2 = System.nanoTime();
+        long destructionStartTime2 = System.nanoTime();
 
         // generate initial solution
-        Set<Integer> initialSolution2 = InitialSolution.greedyDeletion(graph2);
+        Set<Integer> destructionSolution2 = destruction2.greedyDestruction(initialSolution, 0.5);
 
         // set final time for measuring runtime
-        long ISEndTime2 = System.nanoTime();
+        long destructionEndTime2 = System.nanoTime();
 
         // print runtime in seconds
-        System.out.println("Initial solution runtime: " + (ISEndTime2 - ISStartTime2) / 1000000000.0 + "s");
-        System.out.println("Initial solution size: " + initialSolution2.size());
+        System.out
+                .println("GreedyDestruction runtime: " + (destructionEndTime2 - destructionStartTime2) / 1000000000.0
+                        + "s");
+        System.out.println("GreedyDestruction solution size: " + destructionSolution2.size());
 
     }
 
