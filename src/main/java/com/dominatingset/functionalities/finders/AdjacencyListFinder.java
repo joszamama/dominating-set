@@ -1,7 +1,6 @@
 package com.dominatingset.functionalities.finders;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -11,30 +10,31 @@ import com.dominatingset.Graph;
 
 public class AdjacencyListFinder {
 
-    // from a given adjacency list, find the leaf Vertices and the support Vertices
-    public static List<Set<Integer>> findLeafAndSupportVertices(List<Integer>[] adjList) {
-        Set<Integer> supportVertices = new HashSet<>();
+    // from a given adjacency list, find the leaf vertices
+    public static Set<Integer> findLeafVertices(List<Integer>[] adjList) {
         Set<Integer> leafVertices = new HashSet<>();
 
+        // iterate over all vertices on the adj list
         for (int i = 0; i < adjList.length; i++) {
-            List<Integer> neighbors = adjList[i];
-
-            // If vertex i has only one neighbor, it's a leaf vertex
-            if (neighbors.size() == 1) {
+            // if the vertex has exactly 1 neighbor, it is a leaf vertex
+            if (adjList[i].size() == 1) {
                 leafVertices.add(i);
             }
-
-            // Iterate over neighbors of vertex i
-            for (int neighbor : neighbors) {
-
-                // If neighbor of vertex i has only one neighbor (which is i), it's a support
-                // vertex
-                if (adjList[neighbor].size() == 1 && adjList[neighbor].contains(i)) {
-                    supportVertices.add(neighbor);
-                }
-            }
         }
-        return List.of(leafVertices, supportVertices);
+        return leafVertices;
+    }
+
+    // from a given adjacency list and a list of leaf vertices, find the support
+    // vertices that support the leaf vertices
+    public static Set<Integer> findSupportVertices(List<Integer>[] adjList, Set<Integer> leafVertices) {
+        Set<Integer> supportVertices = new HashSet<>();
+
+        // iterate over all leaf vertices
+        for (int leafVertex : leafVertices) {
+            // add the neighbor of the leaf vertex to the support vertices
+            supportVertices.add(adjList[leafVertex].get(0));
+        }
+        return supportVertices;
     }
 
     // from a given adjacency list, find the k best or worst vertices
@@ -63,42 +63,6 @@ public class AdjacencyListFinder {
         }
 
         return kVertices;
-    }
-
-    // Check if a given set of vertices is a dominating set
-    public static boolean isDominatingSet(Graph graph, Set<Integer> dominatingSet) {
-        List<Integer>[] adjList = graph.getAdjacencyList();
-        // Create a sorted list of vertices in descending order of degree
-        List<Integer> sortedVertices = new ArrayList<Integer>();
-        for (int i = 0; i < adjList.length; i++) {
-            sortedVertices.add(i);
-        }
-        sortedVertices.sort(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer v1, Integer v2) {
-                return Integer.compare(adjList[v2].size(), adjList[v1].size());
-            }
-        });
-
-        // Iterate over the sorted list of vertices and check if each vertex is
-        // dominated by the given set
-        for (int i = 0; i < sortedVertices.size(); i++) {
-            int vertex = sortedVertices.get(i);
-            if (!dominatingSet.contains(vertex)) {
-                boolean isNeighborInSet = false;
-                List<Integer> neighbors = adjList[vertex];
-                for (int neighbor : neighbors) {
-                    if (dominatingSet.contains(neighbor)) {
-                        isNeighborInSet = true;
-                        break;
-                    }
-                }
-                if (!isNeighborInSet) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     public static void main(String[] args) {
