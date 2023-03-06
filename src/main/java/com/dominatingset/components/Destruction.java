@@ -40,6 +40,8 @@ public class Destruction {
         return minimalSolution;
     }
 
+    // function for destroying a solution by removing a random percentage of
+    // vertices
     public Set<Integer> greedyDestruction(Set<Integer> minimalSolution, double REMOVE_VERTICES_PERCENTAGE) {
         int n = (int) (minimalSolution.size() * REMOVE_VERTICES_PERCENTAGE);
         List<Integer> verticesToRemove = new ArrayList<>();
