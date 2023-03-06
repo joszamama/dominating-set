@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.dominatingset.components.Destruction;
 import com.dominatingset.components.InitialSolution;
+import com.dominatingset.components.LocalImprovement;
 import com.dominatingset.components.Reconstruction;
 
 public class MDSPTest {
@@ -48,7 +49,21 @@ public class MDSPTest {
         System.out.println("GreedyInsertion runtime: " + (ISEndTime - ISStartTime) / 1000000000.0 + "s");
         System.out.println("GreedyInsertion solution size: " + initialSolution.size());
 
-        System.out.println("---------------------- LocalSearch runtime ----------------------");
+        System.out.println("---------------------- Exchange runtime ----------------------");
+
+        // set initial time for measuring runtime
+        long exchangeStartTime = System.nanoTime();
+
+        // generate initial solution
+        LocalImprovement exchange = new LocalImprovement(graph);
+        Set<Integer> exchangeSolution = exchange.exchange(initialSolution);
+
+        // set final time for measuring runtime
+        long exchangeEndTime = System.nanoTime();
+
+        // print runtime in seconds
+        System.out.println("Exchange runtime: " + (exchangeEndTime - exchangeStartTime) / 1000000000.0 + "s");
+        System.out.println("Exchange solution size: " + exchangeSolution.size());
 
         System.out.println("---------------------- GreedyDestruction runtime ----------------------");
 

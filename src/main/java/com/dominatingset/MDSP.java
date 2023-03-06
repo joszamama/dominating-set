@@ -5,6 +5,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import com.dominatingset.components.Destruction;
+import com.dominatingset.components.LocalImprovement;
 import com.dominatingset.components.Reconstruction;
 
 public class MDSP {
@@ -32,7 +33,7 @@ public class MDSP {
                 i++; // i <- i + 1
             } // end if
         } // end while
-        System.out.println(incumbentSolution);// return Db
+        System.out.println("Solution is: " + incumbentSolution);// return Db
     }
 
     public static void main(String[] args) {
@@ -40,12 +41,13 @@ public class MDSP {
         Graph graph = new Graph("small.txt");
         double REMOVE_VERTICES_PERCENTAGE = 0.1;
         int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 100;
+        LocalImprovement localImprovement = new LocalImprovement(graph);
         Destruction destruction = new Destruction(graph);
         Reconstruction reconstruction = new Reconstruction(graph);
 
         // Instantiating the functions
         Function<Graph, Set<Integer>> GreedyInsertion = com.dominatingset.components.InitialSolution::greedyInsertion;
-        Function<Set<Integer>, Set<Integer>> Exchange = com.dominatingset.components.LocalImprovement::exchange;
+        Function<Set<Integer>, Set<Integer>> Exchange = localImprovement::exchange;
         BiFunction<Set<Integer>, Double, Set<Integer>> RandomDestruction = destruction::randomDestruction;
         Function<Set<Integer>, Set<Integer>> Reconstruction = reconstruction::greedyReconstruction;
 
@@ -60,6 +62,6 @@ public class MDSP {
         long endTime = System.currentTimeMillis();
 
         // Print the time it took to run the algorithm in seconds
-        System.out.println("Time: " + (endTime - startTime) / 1000.0 + " seconds");
+        System.out.println("Runtime: " + (endTime - startTime) / 1000.0 + "s");
     }
 }
