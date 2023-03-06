@@ -5,6 +5,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import com.dominatingset.components.Destruction;
+import com.dominatingset.components.Reconstruction;
 
 public class MDSP {
 
@@ -40,12 +41,13 @@ public class MDSP {
         double REMOVE_VERTICES_PERCENTAGE = 0.1;
         int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 100;
         Destruction destruction = new Destruction(graph);
+        Reconstruction reconstruction = new Reconstruction(graph);
 
         // Instantiating the functions
         Function<Graph, Set<Integer>> GreedyInsertion = com.dominatingset.components.InitialSolution::greedyInsertion;
         Function<Set<Integer>, Set<Integer>> Exchange = com.dominatingset.components.LocalImprovement::exchange;
         BiFunction<Set<Integer>, Double, Set<Integer>> RandomDestruction = destruction::randomDestruction;
-        Function<Set<Integer>, Set<Integer>> Reconstruction = com.dominatingset.components.Reconstruction::Reconstruction1;
+        Function<Set<Integer>, Set<Integer>> Reconstruction = reconstruction::greedyReconstruction;
 
         // Get time before the algorithm
         long startTime = System.currentTimeMillis();

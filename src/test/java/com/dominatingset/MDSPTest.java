@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.dominatingset.components.Destruction;
 import com.dominatingset.components.InitialSolution;
+import com.dominatingset.components.Reconstruction;
 
 public class MDSPTest {
 
@@ -67,6 +68,24 @@ public class MDSPTest {
                 .println("GreedyDestruction runtime: " + (destructionEndTime2 - destructionStartTime2) / 1000000000.0
                         + "s");
         System.out.println("GreedyDestruction solution size: " + destructionSolution2.size());
+
+        System.out.println("---------------------- GreedyReconstruction runtime ----------------------");
+
+        // set initial time for measuring runtime
+        long reconstructionStartTime = System.nanoTime();
+
+        Reconstruction reconstruction = new Reconstruction(graph);
+
+        // generate initial solution
+        Set<Integer> reconstructionSolution = reconstruction.greedyReconstruction(destructionSolution2);
+
+        // set final time for measuring runtime
+        long reconstructionEndTime = System.nanoTime();
+
+        // print runtime in seconds
+        System.out.println("GreedyReconstruction runtime: " + (reconstructionEndTime - reconstructionStartTime)
+                / 1000000000.0 + "s");
+        System.out.println("GreedyReconstruction solution size: " + reconstructionSolution.size());
 
     }
 
