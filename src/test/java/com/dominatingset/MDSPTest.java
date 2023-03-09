@@ -105,7 +105,7 @@ public class MDSPTest {
     }
 
     public static void main(String[] args) {
-        TestRuntime("rnd_graph_500_20_1.txt");
+        TestRuntime("rnd_graph_5000_50_1.txt");
     }
 
 }
