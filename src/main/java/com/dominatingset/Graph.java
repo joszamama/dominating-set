@@ -1,7 +1,5 @@
 package com.dominatingset;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,8 +35,7 @@ public class Graph {
         supportVertices = AdjacencyListFinder.findSupportVertices(adjacencyList, leafVertices);
 
         bestVertices = AdjacencyListFinder.getKVertices(adjacencyList, adjacencyList.length, "TOP");
-        worstVertices = new ArrayList<>(bestVertices);
-        Collections.reverse(worstVertices);
+        worstVertices = AdjacencyListFinder.getKVertices(adjacencyList, adjacencyList.length, "BOTTOM");
 
         System.out.println("Graph created");
     }
@@ -113,7 +110,7 @@ public class Graph {
     }
 
     public static void main(String[] args) {
-        Graph graph = new Graph("astro-ph.txt");
+        Graph graph = new Graph("rnd_graph_500_40_1.txt");
 
         System.out.println("Number of vertices: " + graph.getNumberOfVertices());
         System.out.println("Leaf vertices number: " + graph.getLeafVertices().size());
