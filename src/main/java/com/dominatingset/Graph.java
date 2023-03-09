@@ -110,7 +110,7 @@ public class Graph {
     }
 
     public static void main(String[] args) {
-        Graph graph = new Graph("astro-ph.txt");
+        Graph graph = new Graph("rnd_graph_500_40_1.txt");
 
         System.out.println("Number of vertices: " + graph.getNumberOfVertices());
         System.out.println("Leaf vertices number: " + graph.getLeafVertices().size());
