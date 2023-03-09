@@ -11,16 +11,16 @@ public class Sandbox {
 
     public static void main(String[] args) {
         // create graph from file
-        Graph graph = new Graph("zachary.txt");
+        Graph graph = new Graph("rnd_graph_5000_50_4.txt");
         // provide solution
-        Set<Integer> solution = new HashSet<Integer>();
-        solution.add(0);
-        solution.add(5);
-        solution.add(31);
-        solution.add(33);
+        Set<Integer> check = new HashSet<>();
+        int[] solution = { 512, 2416, 995, 1539, 2403, 3717, 3607, 2441, 4795, 668, 894, 1775 };
+        for (int i = 0; i < solution.length; i++) {
+            check.add(solution[i]);
+        }
 
         // check if solution is dominating set
-        System.out.println("Solution is: " + checkSolutionIsDS(graph, solution));
+        System.out.println("Solution is: " + checkSolutionIsDS(graph, check));
 
     }
 }

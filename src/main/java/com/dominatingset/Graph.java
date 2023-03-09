@@ -34,9 +34,8 @@ public class Graph {
         leafVertices = AdjacencyListFinder.findLeafVertices(adjacencyList);
         supportVertices = AdjacencyListFinder.findSupportVertices(adjacencyList, leafVertices);
 
-        bestVertices = AdjacencyListFinder.getKVertices(adjacencyList, adjacencyList.length/10, "TOP");
-        worstVertices = AdjacencyListFinder.getKVertices(adjacencyList, adjacencyList.length/10, "BOTTOM");
-
+        bestVertices = AdjacencyListFinder.getKVertices(adjacencyList, adjacencyList.length, "TOP");
+        worstVertices = AdjacencyListFinder.getKVertices(adjacencyList, adjacencyList.length, "BOTTOM");
 
         System.out.println("Graph created");
     }

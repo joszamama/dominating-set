@@ -38,7 +38,7 @@ public class MDSP {
 
     public static void main(String[] args) {
         // Instantiating the parameters
-        Graph graph = new Graph("zachary.txt");
+        Graph graph = new Graph("rnd_graph_5000_50_4.txt");
         double REMOVE_VERTICES_PERCENTAGE = 0.15;
         int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 100;
         LocalImprovement localImprovement = new LocalImprovement(graph);
