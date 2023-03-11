@@ -97,6 +97,23 @@ public class Graph {
         return domination.size() == adjacencyList.length;
     }
 
+    public Set<Integer> findDominatedVertices(Set<Integer> solution) {
+        Set<Integer> dominated = new HashSet<>();
+        for (Integer vertex : solution) {
+            dominated.add(vertex);
+            for (Integer neighbor : adjacencyList[vertex]) {
+                dominated.add(neighbor);
+            }
+        }
+        return dominated;
+    }
+
+    public Set<Integer> findUndominated(Set<Integer> solution) {
+        Set<Integer> undominated = new HashSet<>(allVertices);
+        undominated.removeAll(findDominatedVertices(solution));
+        return undominated;
+    }
+
     public Set<Integer> removeRedundancy(Set<Integer> dominatingSet) {
         // remove redundant vertices from initial solution
         Set<Integer> dominatedVertices = new HashSet<>(dominatingSet);
