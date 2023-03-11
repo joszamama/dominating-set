@@ -84,7 +84,12 @@ public class MDSP {
             case "randomDestruction":
                 Destruction = new Destruction(graph)::randomDestruction;
                 break;
-            // add more cases for other Destruction methods
+            case "randomSlicing":
+                Destruction = new Destruction(graph)::randomSlicing;
+                break;
+            case "greedyDestruction":
+                Destruction = new Destruction(graph)::greedyDestruction;
+                break;
         }
 
         switch (ReconstructionMethod) {
