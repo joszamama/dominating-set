@@ -44,7 +44,7 @@ public class MDSP {
             } // end if
         } // end while
         if (graph.isDominatingSet(incumbentSolution)) {
-            System.out.println("Solution is: " + incumbentSolution + ", with size: " + incumbentSolution.size());
+            System.out.println("\nSolution is: " + incumbentSolution + ", with size: " + incumbentSolution.size());
         } else {
             System.out.println("Error found, solution is not DS");
         }
@@ -104,6 +104,7 @@ public class MDSP {
 
         // Print the time it took to run the algorithm in seconds
         System.out.println("Runtime: " + (endTime - startTime) / 1000.0 + "s");
+        System.out.println(" --------------------------------\n");
     }
 
     public static void main(String[] args) {
@@ -120,5 +121,6 @@ public class MDSP {
         // Calling the Iterated Greedy algorithm
         runIG(file, REMOVE_VERTICES_PERCENTAGE, MAX_ITERATIONS_WITHOUT_IMPROVEMENT, InitialSolutionMethod,
                 LocalImprovementMethod, DestructionMethod, ReconstructionMethod);
+
     }
 }
