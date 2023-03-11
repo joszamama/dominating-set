@@ -1,5 +1,6 @@
 package com.dominatingset;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -29,13 +30,14 @@ public class MDSP {
 
         System.out.println("\nApplying Iterated Greedy...");
         while (i < MAX_ITERATIONS_WITHOUT_IMPROVEMENT) { // while i < MAX_ITERATIONS_WITHOUT_IMPROVEMENT do
-            Set<Integer> unfeasableSolution = Destruction.apply(incumbentSolution, REMOVE_VERTICES_PERCENTAGE);
+            Set<Integer> copy = new HashSet<>(incumbentSolution); // Dd <- Db
+            Set<Integer> unfeasableSolution = Destruction.apply(copy, REMOVE_VERTICES_PERCENTAGE);
             Set<Integer> feasibleSolution = Reconstruction.apply(unfeasableSolution); // Dr <- Reconstruction(Dd)
             Set<Integer> minimalSolution = LocalImprovement.apply(feasibleSolution); // Di <- LocalImprovement(Dr)
 
             if (minimalSolution.size() < incumbentSolution.size()) { // if |Di| < |Db| then,
-                System.out.println("Smaller DS found: " + incumbentSolution);
-                incumbentSolution = minimalSolution; // Db <- Di
+                System.out.println("Smaller DS found with size: " + minimalSolution.size());
+                incumbentSolution = new HashSet<>(minimalSolution); // Db <- Di
                 i = 0; // i <- 0
             } else { // else
                 i++; // i <- i + 1
@@ -51,7 +53,7 @@ public class MDSP {
     public static void runIG(String file, double REMOVE_VERTICES_PERCENTAGE, int MAX_ITERATIONS_WITHOUT_IMPROVEMENT,
             String InitialSolutionMethod, String LocalImprovementMethod, String DestructionMethod,
             String ReconstructionMethod) {
-        
+
         // Instantiating the graph
         System.out.println(" ------- Iterated Greedy Algorithm -------");
         System.out.println("Instantiating the graph...");
