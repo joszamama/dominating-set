@@ -24,6 +24,9 @@ public class LocalImprovement {
             // add random vertex from vertices
             randomVertex = (int) (Math.random() * vertices.size());
             newMinimalSolution.add(vertices.toArray(new Integer[0])[randomVertex]);
+
+            // check for redundant vertices
+
             if (graph.isDominatingSet(newMinimalSolution)) {
                 minimalSolution = newMinimalSolution;
             }
