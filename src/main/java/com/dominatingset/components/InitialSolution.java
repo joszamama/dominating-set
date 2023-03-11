@@ -15,7 +15,7 @@ public class InitialSolution {
         bestVertices.removeAll(graph.getLeafVertices());
 
         // add vertices to initial solution in order of their number of neighbours
-        for (Integer vertex : graph.getBestVertices()) {
+        for (Integer vertex : bestVertices) {
             if (!graph.isDominatingSet(initialSolution)) {
                 // if vertex is not a leaf vertex, not already in initial solution and the
                 // current initial solution is not a dominating set, add vertex to initial
