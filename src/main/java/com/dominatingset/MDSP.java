@@ -68,7 +68,9 @@ public class MDSP {
             case "greedyInsertion":
                 InitialSolution = com.dominatingset.components.InitialSolution::greedyInsertion;
                 break;
-            // add more cases for other InitialSolution methods
+            case "greedyDeletion":
+                InitialSolution = com.dominatingset.components.InitialSolution::greedyDeletion;
+                break;
         }
 
         switch (LocalImprovementMethod) {
