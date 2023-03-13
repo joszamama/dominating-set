@@ -116,9 +116,9 @@ public class MDSP {
 
     public static void main(String[] args) {
         // Instantiating the parameters
-        String file = "rnd_graph_5000_50_1.txt";
-        double REMOVE_VERTICES_PERCENTAGE = 0.15;
-        int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 1000;
+        String file = "polbooks.txt";
+        double REMOVE_VERTICES_PERCENTAGE = 0.2;
+        int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 250;
 
         String InitialSolutionMethod = "greedyInsertion";
         String LocalImprovementMethod = "exchange";
