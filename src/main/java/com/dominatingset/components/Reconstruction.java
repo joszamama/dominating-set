@@ -1,5 +1,6 @@
 package com.dominatingset.components;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ public class Reconstruction {
     }
 
     public Set<Integer> randomReconstruction(Set<Integer> minimalSolution) {
-        Set<Integer> vertices = graph.getAllVertices();
+        Set<Integer> vertices = new HashSet<>(graph.getAllVertices());
         while (!graph.isDominatingSet(minimalSolution)) {
             int randomVertex = (int) (Math.random() * vertices.size()); // Select random vertex from vertices
             minimalSolution.add(vertices.toArray(new Integer[0])[randomVertex]); // Add vertex to minimalSolution
