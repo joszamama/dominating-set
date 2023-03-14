@@ -130,7 +130,7 @@ public class IG {
         // Instantiating the parameters
         String file = "rnd_graph_500_50_1.txt";
         double REMOVE_VERTICES_PERCENTAGE = 0.2;
-        int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 250;
+        int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 2500;
 
         String InitialSolutionMethod = "greedyInsertion";
         String LocalImprovementMethod = "exchange";
@@ -141,17 +141,10 @@ public class IG {
         IG ig = new IG(file, MAX_ITERATIONS_WITHOUT_IMPROVEMENT, REMOVE_VERTICES_PERCENTAGE, InitialSolutionMethod,
                 LocalImprovementMethod, DestructionMethod, ReconstructionMethod);
 
-        // Print IG parameters
-        System.out.println("Parameters:");
-        System.out.println("Graph: " + ig.graph);
-        System.out.println("MAX_ITERATIONS_WITHOUT_IMPROVEMENT: " + ig.MAX_ITERATIONS_WITHOUT_IMPROVEMENT);
-        System.out.println("REMOVE_VERTICES_PERCENTAGE: " + ig.REMOVE_VERTICES_PERCENTAGE);
+        // Running the Iterated Greedy
+        ig.run();
 
-        // Print IG methods
-        System.out.println("Methods:");
-        System.out.println("InitialSolution: " + ig.InitialSolution);
-        System.out.println("LocalImprovement: " + ig.LocalImprovement);
-        System.out.println("Destruction: " + ig.Destruction);
-        System.out.println("Reconstruction: " + ig.Reconstruction);
+        // Printing the results
+        System.out.println(ig.getResults());
     }
 }
