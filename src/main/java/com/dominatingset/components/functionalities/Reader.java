@@ -1,12 +1,10 @@
-package com.dominatingset.functionalities.readers;
+package com.dominatingset.components.functionalities;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import com.dominatingset.functionalities.plotters.AdjacencyMatrixPlotter;
-
-public class AdjacencyMatrixReader {
+public class Reader {
 
     public static boolean[][] readMatrix(String filename) {
         boolean[][] adjMatrix = null;
@@ -35,13 +33,5 @@ public class AdjacencyMatrixReader {
             values[i] = parts[i].equals("1");
         }
         return values;
-    }
-
-    public static void main(String[] args) {
-        // Read the adjacency matrix from a file
-        boolean[][] adjMatrix = readMatrix("small.txt");
-
-        // Plot the adjacency matrix
-        AdjacencyMatrixPlotter.plotMatrix(adjMatrix);
     }
 }

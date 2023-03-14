@@ -1,4 +1,4 @@
-package com.dominatingset.functionalities.finders;
+package com.dominatingset.components.functionalities;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,7 +8,7 @@ import java.util.Set;
 
 import com.dominatingset.Graph;
 
-public class AdjacencyListFinder {
+public class Finder {
 
     // from a given adjacency list, find the leaf vertices
     public static Set<Integer> findLeafVertices(List<Integer>[] adjList) {
@@ -38,7 +38,7 @@ public class AdjacencyListFinder {
     }
 
     // from a given adjacency list, find the k best or worst vertices
-    public static List<Integer> getKVertices(List<Integer>[] adjList, int k, String type) {
+    public static List<Integer> findKVertices(List<Integer>[] adjList, int k, String type) {
         List<Integer> kVertices = new ArrayList<>();
         PriorityQueue<Integer> pq = new PriorityQueue<>(
                 (v1, v2) -> type.equals("TOP") ? Integer.compare(adjList[v2].size(), adjList[v1].size())
@@ -66,7 +66,7 @@ public class AdjacencyListFinder {
     }
 
     public static void main(String[] args) {
-        Graph graph = new Graph("massive.txt");
+        Graph graph = new Graph("rnd_graph_5000_50_1.txt");
 
         System.out.println("Leaf vertices: " + graph.getLeafVertices());
         System.out.println("Support vertices: " + graph.getSupportVertices());

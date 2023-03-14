@@ -4,9 +4,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.dominatingset.functionalities.finders.AdjacencyListFinder;
-import com.dominatingset.functionalities.readers.AdjacencyMatrixReader;
-import com.dominatingset.functionalities.transformers.AdjacencyMatrixTransformer;
+import com.dominatingset.components.functionalities.Finder;
+import com.dominatingset.components.functionalities.Reader;
+import com.dominatingset.components.functionalities.Transformer;
 
 public class Graph {
 
@@ -23,19 +23,19 @@ public class Graph {
     public Graph(String file) {
         System.out.println("Creating graph...");
 
-        adjacencyMatrix = AdjacencyMatrixReader.readMatrix(file);
-        adjacencyList = AdjacencyMatrixTransformer.matrixToAdjacencyList(adjacencyMatrix);
+        adjacencyMatrix = Reader.readMatrix(file);
+        adjacencyList = Transformer.matrixToAdjacencyList(adjacencyMatrix);
 
         allVertices = new HashSet<>();
         for (int i = 0; i < adjacencyList.length; i++) {
             allVertices.add(i);
         }
 
-        leafVertices = AdjacencyListFinder.findLeafVertices(adjacencyList);
-        supportVertices = AdjacencyListFinder.findSupportVertices(adjacencyList, leafVertices);
+        leafVertices = Finder.findLeafVertices(adjacencyList);
+        supportVertices = Finder.findSupportVertices(adjacencyList, leafVertices);
 
-        bestVertices = AdjacencyListFinder.getKVertices(adjacencyList, adjacencyList.length, "TOP");
-        worstVertices = AdjacencyListFinder.getKVertices(adjacencyList, adjacencyList.length, "BOTTOM");
+        bestVertices = Finder.findKVertices(adjacencyList, adjacencyList.length, "TOP");
+        worstVertices = Finder.findKVertices(adjacencyList, adjacencyList.length, "BOTTOM");
 
         System.out.println("Graph created");
     }
