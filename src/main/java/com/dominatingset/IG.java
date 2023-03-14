@@ -48,27 +48,17 @@ public class IG {
             case "greedyInsertion":
                 InitialSolution = com.dominatingset.components.InitialSolution::greedyInsertion;
                 break;
-            case "greedyDeletion":
-                InitialSolution = com.dominatingset.components.InitialSolution::greedyDeletion;
-                break;
         }
 
         switch (LI) {
             case "exchange":
                 LocalImprovement = new com.dominatingset.components.LocalImprovement(graph)::exchange;
                 break;
-            // add more cases for other LocalImprovement methods
         }
 
         switch (D) {
             case "randomDestruction":
-                Destruction = new com.dominatingset.components.Destruction(graph)::randomDestruction;
-                break;
-            case "randomSlicing":
-                Destruction = new com.dominatingset.components.Destruction(graph)::randomSlicing;
-                break;
-            case "greedyDestruction":
-                Destruction = new com.dominatingset.components.Destruction(graph)::greedyDestruction;
+                Destruction = new com.dominatingset.components.Destruction()::randomDestruction;
                 break;
         }
 
@@ -76,7 +66,6 @@ public class IG {
             case "randomReconstruction":
                 Reconstruction = new com.dominatingset.components.Reconstruction(graph)::randomReconstruction;
                 break;
-            // add more cases for other Reconstruction methods
         }
     }
 
@@ -93,7 +82,6 @@ public class IG {
         System.out.println("Improved Solution with size: " + incumbentSolution.size());
 
         int i = 0; // i <- 0;
-
         System.out.println("\nApplying Iterated Greedy...");
         while (i < MAX_ITERATIONS_WITHOUT_IMPROVEMENT) { // while i < MAX_ITERATIONS_WITHOUT_IMPROVEMENT do
             Set<Integer> copy = new HashSet<>(incumbentSolution); // Dd <- Db
@@ -128,9 +116,9 @@ public class IG {
 
     public static void main(String args[]) {
         // Instantiating the parameters
-        String file = "rnd_graph_500_50_1.txt";
+        String file = "polbooks.txt";
         double REMOVE_VERTICES_PERCENTAGE = 0.2;
-        int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 2500;
+        int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 250;
 
         String InitialSolutionMethod = "greedyInsertion";
         String LocalImprovementMethod = "exchange";

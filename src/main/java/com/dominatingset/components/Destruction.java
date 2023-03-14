@@ -1,63 +1,55 @@
 package com.dominatingset.components;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.dominatingset.Graph;
 
 public class Destruction {
 
-    private static Graph graph;
-
-    public Destruction(Graph graph) {
-        Destruction.graph = graph;
-    }
-
-    // function for destroying a solution by removing a random percentage of
-    // vertices
-    public Set<Integer> randomDestruction(Set<Integer> minimalSolution, double REMOVE_VERTICES_PERCENTAGE) {
-        // Remove a random percentage of vertices from the minimal solution
-        for (int i = 0; i < minimalSolution.size() * REMOVE_VERTICES_PERCENTAGE; i++) {
-            int randomVertex = (int) (Math.random() * minimalSolution.size());
-            minimalSolution.remove(randomVertex);
+    public Set<Integer> randomDestruction(Set<Integer> solution, Double REMOVE_VERTICES_PERCENTAGE) {
+        // delete the % of the vertices in the solution at random
+        List<Integer> unfeasibleSolution = new ArrayList<>(solution);
+        int verticesToRemove = (int) (REMOVE_VERTICES_PERCENTAGE * solution.size());
+        for (int i = 0; i < verticesToRemove; i++) {
+            // get random vertex in length of unfeasibleSolution
+            Integer randomVertex = unfeasibleSolution.get((int) (Math.random() * unfeasibleSolution.size()));
+            // remove random vertex
+            unfeasibleSolution.remove(randomVertex);
         }
-        return minimalSolution;
+
+        return new HashSet<>(unfeasibleSolution);
     }
 
-    // function for destroying a solution by removing a random percentage of
-    // vertices
-    public Set<Integer> randomSlicing(Set<Integer> minimalSolution, double REMOVE_VERTICES_PERCENTAGE) {
-        int k = (int) (minimalSolution.size() * REMOVE_VERTICES_PERCENTAGE);
-        List<Integer> indices = new ArrayList<>(minimalSolution);
-        Collections.shuffle(indices);
-        Set<Integer> removedVertices = new HashSet<>(indices.subList(0, k));
-        minimalSolution.removeAll(removedVertices);
-        return minimalSolution;
-    }
+    public static void main(String args[]) {
+        // Instance new graph
+        Graph graph = new Graph("rnd_graph_5000_50_1.txt");
 
-    // function for destroying a solution by removing a random percentage of
-    // vertices
-    public Set<Integer> greedyDestruction(Set<Integer> minimalSolution, double REMOVE_VERTICES_PERCENTAGE) {
-        int n = (int) (minimalSolution.size() * REMOVE_VERTICES_PERCENTAGE);
-        List<Integer> verticesToRemove = new ArrayList<>();
-        List<Integer> sortedVertices = minimalSolution.stream()
-                .sorted(Comparator.comparingInt(vertex -> graph.getNeighbors(vertex).size()))
-                .collect(Collectors.toList());
-        for (int i = 0; i < n; i++) {
-            if (sortedVertices.size() > i) {
-                verticesToRemove.add(sortedVertices.get(i));
-            } else {
-                break;
-            }
-        }
-        System.out.println("Removing " + verticesToRemove.size() + " vertices");
-        minimalSolution.removeAll(verticesToRemove);
-        return minimalSolution;
-    }
+        // Get initial solution
+        Set<Integer> initialSolution = InitialSolution.greedyInsertion(graph);
 
+        System.out.println("Initial solution: " + initialSolution + ", with size: " + initialSolution.size());
+
+        // Get local improvement
+        Set<Integer> solution = new LocalImprovement(graph).exchange(initialSolution);
+
+        // Print the local improvement
+        System.out.println("Local improvement: " + solution + ", with size: " + solution.size());
+
+        // Start timer
+        long startTime = System.currentTimeMillis();
+
+        // Destroy the solution
+        Set<Integer> unfeasibleSolution = new Destruction().randomDestruction(solution, 0.2);
+
+        // Stop timer
+        long stopTime = System.currentTimeMillis();
+
+        // Print the unfeasible solution
+        System.out.println("Unfeasible solution: " + unfeasibleSolution + ", with size: " + unfeasibleSolution.size()
+                + " in " + (stopTime - startTime) / 1000.0 + " s");
+
+    }
 }
