@@ -3,7 +3,6 @@
 
 # Log file
 *.log
-src/main/java/com/dominatingset/files/
 # BlueJ files
 *.ctxt
 
