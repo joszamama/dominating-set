@@ -15,7 +15,7 @@ public class InitialSolution {
         bestVertices.removeAll(graph.getLeafVertices());
 
         // add vertices to initial solution in order of their number of neighbours
-        for (Integer vertex : graph.getBestVertices()) {
+        for (Integer vertex : bestVertices) {
             if (!graph.isDominatingSet(initialSolution)) {
                 // if vertex is not a leaf vertex, not already in initial solution and the
                 // current initial solution is not a dominating set, add vertex to initial
@@ -25,36 +25,7 @@ public class InitialSolution {
         }
 
         // remove redundant vertices from initial solution
-        Set<Integer> dominatedVertices = new HashSet<>(initialSolution);
-        Set<Integer> checkedVertices = new HashSet<>();
-
-        // iterate over all vertices in initial solution
-        for (Integer vertex : initialSolution) {
-            // if vertex has already been checked, continue
-            if (checkedVertices.contains(vertex)) {
-                continue;
-            }
-            // if vertex is dominated by other vertices in initial solution, remove it
-            boolean isRedundant = true;
-            // iterate over all neighbours of vertex
-            for (Integer neighbor : graph.getNeighbors(vertex)) {
-                // if neighbour is not in initial solution, vertex is not redundant
-                if (!dominatedVertices.contains(neighbor)) {
-                    isRedundant = false;
-                    break;
-                }
-            }
-            // if vertex is redundant, remove it from initial solution and add its neighbors
-            if (isRedundant) {
-                dominatedVertices.remove(vertex);
-                // add neighbours of vertex to checked vertices
-                for (Integer neighbor : graph.getNeighbors(vertex)) {
-                    checkedVertices.add(neighbor);
-                }
-            }
-        }
-        // return initial solution without redundant vertices
-        return dominatedVertices;
+        return graph.removeRedundancy(initialSolution);
     }
 
     public static Set<Integer> greedyDeletion(Graph graph) {
@@ -81,36 +52,7 @@ public class InitialSolution {
         }
 
         // remove redundant vertices from initial solution
-        Set<Integer> dominatedVertices = new HashSet<>(initialSolution);
-        Set<Integer> checkedVertices = new HashSet<>();
-
-        // iterate over all vertices in initial solution
-        for (Integer vertex : initialSolution) {
-            // if vertex has already been checked, continue
-            if (checkedVertices.contains(vertex)) {
-                continue;
-            }
-            // if vertex is dominated by other vertices in initial solution, remove it
-            boolean isRedundant = true;
-            // iterate over all neighbours of vertex
-            for (Integer neighbor : graph.getNeighbors(vertex)) {
-                // if neighbour is not in initial solution, vertex is not redundant
-                if (!dominatedVertices.contains(neighbor)) {
-                    isRedundant = false;
-                    break;
-                }
-            }
-            // if vertex is redundant, remove it from initial solution and add its neighbors
-            if (isRedundant) {
-                dominatedVertices.remove(vertex);
-                // add neighbours of vertex to checked vertices
-                for (Integer neighbor : graph.getNeighbors(vertex)) {
-                    checkedVertices.add(neighbor);
-                }
-            }
-        }
-        // return initial solution without redundant vertices
-        return dominatedVertices;
+        return graph.removeRedundancy(initialSolution);
     }
 
 }

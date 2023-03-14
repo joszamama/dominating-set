@@ -97,6 +97,57 @@ public class Graph {
         return domination.size() == adjacencyList.length;
     }
 
+    public Set<Integer> findDominatedVertices(Set<Integer> solution) {
+        Set<Integer> dominated = new HashSet<>();
+        for (Integer vertex : solution) {
+            dominated.add(vertex);
+            for (Integer neighbor : adjacencyList[vertex]) {
+                dominated.add(neighbor);
+            }
+        }
+        return dominated;
+    }
+
+    public Set<Integer> findUndominated(Set<Integer> solution) {
+        Set<Integer> undominated = new HashSet<>(allVertices);
+        undominated.removeAll(findDominatedVertices(solution));
+        return undominated;
+    }
+
+    public Set<Integer> removeRedundancy(Set<Integer> dominatingSet) {
+        // remove redundant vertices from initial solution
+        Set<Integer> dominatedVertices = new HashSet<>(dominatingSet);
+        Set<Integer> checkedVertices = new HashSet<>();
+
+        // iterate over all vertices in initial solution
+        for (Integer vertex : dominatingSet) {
+            // if vertex has already been checked, continue
+            if (checkedVertices.contains(vertex)) {
+                continue;
+            }
+            // if vertex is dominated by other vertices in initial solution, remove it
+            boolean isRedundant = true;
+            // iterate over all neighbours of vertex
+            for (Integer neighbor : getNeighbors(vertex)) {
+                // if neighbour is not in initial solution, vertex is not redundant
+                if (!dominatedVertices.contains(neighbor)) {
+                    isRedundant = false;
+                    break;
+                }
+            }
+            // if vertex is redundant, remove it from initial solution and add its neighbors
+            if (isRedundant) {
+                dominatedVertices.remove(vertex);
+                // add neighbours of vertex to checked vertices
+                for (Integer neighbor : getNeighbors(vertex)) {
+                    checkedVertices.add(neighbor);
+                }
+            }
+        }
+        // return initial solution without redundant vertices
+        return dominatedVertices;
+    }
+
     public boolean v1IsDominatedByV2(Integer v1, Integer v2) {
         return adjacencyList[v1].contains(v2);
     }
