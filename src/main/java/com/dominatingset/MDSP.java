@@ -1,47 +1,96 @@
 package com.dominatingset;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class MDSP {
+
+    Map<String, List<String>> configuration;
+    static List<String> results = new ArrayList<>();
+
+    public MDSP(String configurationFile) {
+        Map<String, List<String>> sections = new HashMap<>();
+
+        try (BufferedReader br = new BufferedReader(
+                new FileReader("./src/main/java/com/dominatingset/configuration/" + configurationFile))) {
+            String line;
+            String currentSection = null;
+            while ((line = br.readLine()) != null) {
+                if (line.startsWith("-")) {
+                    currentSection = line.substring(1, line.length() - 2).trim();
+                    sections.put(currentSection, new ArrayList<>());
+                } else {
+                    if (!line.isBlank()) {
+                        sections.get(currentSection).add(line);
+                    }
+                }
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.configuration = sections;
+    }
 
     public static void runIG(String file, double REMOVE_VERTICES_PERCENTAGE, int MAX_ITERATIONS_WITHOUT_IMPROVEMENT,
             String InitialSolutionMethod, String LocalImprovementMethod, String DestructionMethod,
             String ReconstructionMethod) {
 
-        // Instantiating the graph
-        System.out.println("\n ------- Iterated Greedy Algorithm -------");
-        System.out.println("Instantiating the graph...");
-
-        Graph graph = new Graph(file);
-        IG ig = new IG(graph, MAX_ITERATIONS_WITHOUT_IMPROVEMENT, REMOVE_VERTICES_PERCENTAGE, InitialSolutionMethod,
+        IG ig = new IG(file, MAX_ITERATIONS_WITHOUT_IMPROVEMENT, REMOVE_VERTICES_PERCENTAGE, InitialSolutionMethod,
                 LocalImprovementMethod, DestructionMethod, ReconstructionMethod);
-
-        // Get time before the algorithm
-        long startTime = System.currentTimeMillis();
 
         // Calling the Iterated Greedy algorithm
         ig.run();
 
-        // Get time after the algorithm
-        long endTime = System.currentTimeMillis();
+        // Print results
+        System.out.println(ig.getResults());
+        results.add(ig.getResults());
 
-        // Print the time it took to run the algorithm in seconds
-        System.out.println("Runtime: " + (endTime - startTime) / 1000.0 + "s");
         System.out.println(" --------------------------------\n");
     }
 
+    public Map<String, List<String>> getConfiguration() {
+        return configuration;
+    }
+
     public static void main(String[] args) {
-        // Instantiating the parameters
-        String file = "rnd_graph_5000_50_1.txt";
-        double REMOVE_VERTICES_PERCENTAGE = 0.2;
-        int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 250;
+        // Instace new configuration
+        MDSP mdsp = new MDSP("configuration.txt");
 
-        String InitialSolutionMethod = "greedyInsertion";
-        String LocalImprovementMethod = "exchange";
-        String DestructionMethod = "randomDestruction";
-        String ReconstructionMethod = "randomReconstruction";
+        // Get configuration
+        Map<String, List<String>> configuration = mdsp.getConfiguration();
 
-        // Calling the Iterated Greedy algorithm
-        runIG(file, REMOVE_VERTICES_PERCENTAGE, MAX_ITERATIONS_WITHOUT_IMPROVEMENT, InitialSolutionMethod,
-                LocalImprovementMethod, DestructionMethod, ReconstructionMethod);
+        for (String file : configuration.get("Files")) {
+            for (String REMOVE_VERTICES_PERCENTAGE : configuration.get("RVP")) {
+                for (String MAX_ITERATIONS_WITHOUT_IMPROVEMENT : configuration.get("MIWI")) {
+                    for (String INITIAL_SOLUTION : configuration.get("ISMethods")) {
+                        for (String LOCAL_IMPROVEMENT : configuration.get("LIMethods")) {
+                            for (String DELETION : configuration.get("DMethods")) {
+                                for (String RECONSTRUCTION : configuration.get("RMethods")) {
+                                    // Run IG
+                                    runIG(file, Double.parseDouble(REMOVE_VERTICES_PERCENTAGE),
+                                            Integer.parseInt(MAX_ITERATIONS_WITHOUT_IMPROVEMENT), INITIAL_SOLUTION,
+                                            LOCAL_IMPROVEMENT, DELETION, RECONSTRUCTION);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
+        // Print results
+        System.out.println(" --------------------------------\n");
+        System.out.println("RESULTS");
+        System.out.println(" --------------------------------\n");
+
+        for (String result : results) {
+            System.out.println(result);
+        }
     }
 }

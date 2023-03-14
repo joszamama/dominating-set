@@ -7,21 +7,42 @@ import java.util.function.Function;
 
 public class IG {
 
-    Graph graph;
+    String file;
     Integer MAX_ITERATIONS_WITHOUT_IMPROVEMENT;
     Double REMOVE_VERTICES_PERCENTAGE;
 
-    Function<Graph, Set<Integer>> InitialSolution;
-    Function<Set<Integer>, Set<Integer>> LocalImprovement;
-    BiFunction<Set<Integer>, Double, Set<Integer>> Destruction;
-    Function<Set<Integer>, Set<Integer>> Reconstruction;
+    String IS, LI, D, R;
 
-    public IG(Graph graph, Integer MAX_ITERATIONS_WITHOUT_IMPROVEMENT, Double REMOVE_VERTICES_PERCENTAGE, String IS,
+    Graph graph;
+
+    Function<Graph, Set<Integer>> InitialSolution = null;
+    Function<Set<Integer>, Set<Integer>> LocalImprovement = null;
+    BiFunction<Set<Integer>, Double, Set<Integer>> Destruction = null;
+    Function<Set<Integer>, Set<Integer>> Reconstruction = null;
+
+    Set<Integer> solution;
+    long time;
+
+    public IG(String file, Integer MAX_ITERATIONS_WITHOUT_IMPROVEMENT, Double REMOVE_VERTICES_PERCENTAGE, String IS,
             String LI, String D, String R) {
 
-        this.graph = graph;
+        this.file = file;
+
         this.MAX_ITERATIONS_WITHOUT_IMPROVEMENT = MAX_ITERATIONS_WITHOUT_IMPROVEMENT;
         this.REMOVE_VERTICES_PERCENTAGE = REMOVE_VERTICES_PERCENTAGE;
+
+        this.IS = IS;
+        this.LI = LI;
+        this.D = D;
+        this.R = R;
+
+        // Instantiating the graph
+        System.out.println("\n ------- Iterated Greedy Algorithm -------");
+        System.out.println("Instantiating the graph...");
+        this.graph = new Graph(file);
+
+        // Instantiating the methods
+        System.out.println("Instantiating the methods...");
 
         switch (IS) {
             case "greedyInsertion":
@@ -60,6 +81,9 @@ public class IG {
     }
 
     public void run() {
+        // Start timer
+        long startTime = System.currentTimeMillis();
+
         System.out.println("\nGenerating initial solution...");
         Set<Integer> startingSolution = InitialSolution.apply(graph); // D <- InitialSolution(G)
         System.out.println("Initial Solution with size: " + startingSolution.size());
@@ -85,7 +109,21 @@ public class IG {
                 i++; // i <- i + 1
             } // end if
         } // end while
-        System.out.println("\nSolution is: " + incumbentSolution + ", with size: " + incumbentSolution.size());
+          // Stop timer
+        long endTime = System.currentTimeMillis();
+
+        this.time = endTime - startTime;
+        this.solution = incumbentSolution;
+
+        System.out.println("\nSolution is: " + solution + ", with size: " + solution.size());
+        System.out.println("Time: " + time / 1000.0 + " seconds");
+    }
+
+    public String getResults() {
+        return "For graph: " + file + ", using MIWI: " + MAX_ITERATIONS_WITHOUT_IMPROVEMENT + " and RVP: "
+                + REMOVE_VERTICES_PERCENTAGE + ", using methods: " + IS + ", " + LI + ", " + D + ", " + R
+                + ", IG found a solution with size: " + solution.size()
+                + " in: " + time / 1000.0 + " seconds\n";
     }
 
     public static void main(String args[]) {
@@ -99,11 +137,8 @@ public class IG {
         String DestructionMethod = "randomDestruction";
         String ReconstructionMethod = "randomReconstruction";
 
-        // Instantiating the graph
-        Graph graph = new Graph(file);
-
         // Instantiating the Iterated Greedy
-        IG ig = new IG(graph, MAX_ITERATIONS_WITHOUT_IMPROVEMENT, REMOVE_VERTICES_PERCENTAGE, InitialSolutionMethod,
+        IG ig = new IG(file, MAX_ITERATIONS_WITHOUT_IMPROVEMENT, REMOVE_VERTICES_PERCENTAGE, InitialSolutionMethod,
                 LocalImprovementMethod, DestructionMethod, ReconstructionMethod);
 
         // Print IG parameters
