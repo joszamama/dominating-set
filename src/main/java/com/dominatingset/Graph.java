@@ -20,6 +20,8 @@ public class Graph {
     private List<Integer> bestVertices;
     private List<Integer> worstVertices;
 
+
+
     public Graph(String file) {
         System.out.println("Creating graph...");
 

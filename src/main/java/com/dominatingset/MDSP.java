@@ -1,110 +1,24 @@
 package com.dominatingset;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-
-import com.dominatingset.components.Destruction;
-import com.dominatingset.components.LocalImprovement;
-import com.dominatingset.components.Reconstruction;
-
 public class MDSP {
-
-    public static void IteratedGreedy(Graph graph, double REMOVE_VERTICES_PERCENTAGE,
-            int MAX_ITERATIONS_WITHOUT_IMPROVEMENT,
-            Function<Graph, Set<Integer>> InitialSolution,
-            Function<Set<Integer>, Set<Integer>> LocalImprovement,
-            BiFunction<Set<Integer>, Double, Set<Integer>> Destruction,
-            Function<Set<Integer>, Set<Integer>> Reconstruction) {
-
-        System.out.println("\nGenerating initial solution...");
-        Set<Integer> startingSolution = InitialSolution.apply(graph); // D <- InitialSolution(G)
-        System.out.println("Initial Solution with size: " + startingSolution.size());
-
-        System.out.println("\nApplying local improvement...");
-        Set<Integer> incumbentSolution = LocalImprovement.apply(startingSolution); // Db <- LocalImprovement(D)
-        System.out.println("Improved Solution with size: " + incumbentSolution.size());
-
-        int i = 0; // i <- 0;
-
-        System.out.println("\nApplying Iterated Greedy...");
-        while (i < MAX_ITERATIONS_WITHOUT_IMPROVEMENT) { // while i < MAX_ITERATIONS_WITHOUT_IMPROVEMENT do
-            Set<Integer> copy = new HashSet<>(incumbentSolution); // Dd <- Db
-            Set<Integer> unfeasableSolution = Destruction.apply(copy, REMOVE_VERTICES_PERCENTAGE);
-            Set<Integer> feasibleSolution = Reconstruction.apply(unfeasableSolution); // Dr <- Reconstruction(Dd)
-            Set<Integer> minimalSolution = LocalImprovement.apply(feasibleSolution); // Di <- LocalImprovement(Dr)
-
-            if (minimalSolution.size() < incumbentSolution.size()) { // if |Di| < |Db| then,
-                System.out.println("Smaller DS found with size: " + minimalSolution.size());
-                incumbentSolution = new HashSet<>(minimalSolution); // Db <- Di
-                i = 0; // i <- 0
-            } else { // else
-                i++; // i <- i + 1
-            } // end if
-        } // end while
-        if (graph.isDominatingSet(incumbentSolution)) {
-            System.out.println("\nSolution is: " + incumbentSolution + ", with size: " + incumbentSolution.size());
-        } else {
-            System.out.println("Error found, solution is not DS");
-        }
-    }
 
     public static void runIG(String file, double REMOVE_VERTICES_PERCENTAGE, int MAX_ITERATIONS_WITHOUT_IMPROVEMENT,
             String InitialSolutionMethod, String LocalImprovementMethod, String DestructionMethod,
             String ReconstructionMethod) {
 
         // Instantiating the graph
-        System.out.println(" ------- Iterated Greedy Algorithm -------");
+        System.out.println("\n ------- Iterated Greedy Algorithm -------");
         System.out.println("Instantiating the graph...");
+
         Graph graph = new Graph(file);
-
-        Function<Graph, Set<Integer>> InitialSolution = null;
-        Function<Set<Integer>, Set<Integer>> LocalImprovement = null;
-        BiFunction<Set<Integer>, Double, Set<Integer>> Destruction = null;
-        Function<Set<Integer>, Set<Integer>> Reconstruction = null;
-
-        switch (InitialSolutionMethod) {
-            case "greedyInsertion":
-                InitialSolution = com.dominatingset.components.InitialSolution::greedyInsertion;
-                break;
-            case "greedyDeletion":
-                InitialSolution = com.dominatingset.components.InitialSolution::greedyDeletion;
-                break;
-        }
-
-        switch (LocalImprovementMethod) {
-            case "exchange":
-                LocalImprovement = new LocalImprovement(graph)::exchange;
-                break;
-            // add more cases for other LocalImprovement methods
-        }
-
-        switch (DestructionMethod) {
-            case "randomDestruction":
-                Destruction = new Destruction(graph)::randomDestruction;
-                break;
-            case "randomSlicing":
-                Destruction = new Destruction(graph)::randomSlicing;
-                break;
-            case "greedyDestruction":
-                Destruction = new Destruction(graph)::greedyDestruction;
-                break;
-        }
-
-        switch (ReconstructionMethod) {
-            case "randomReconstruction":
-                Reconstruction = new Reconstruction(graph)::randomReconstruction;
-                break;
-            // add more cases for other Reconstruction methods
-        }
+        IG ig = new IG(graph, MAX_ITERATIONS_WITHOUT_IMPROVEMENT, REMOVE_VERTICES_PERCENTAGE, InitialSolutionMethod,
+                LocalImprovementMethod, DestructionMethod, ReconstructionMethod);
 
         // Get time before the algorithm
         long startTime = System.currentTimeMillis();
 
         // Calling the Iterated Greedy algorithm
-        IteratedGreedy(graph, REMOVE_VERTICES_PERCENTAGE, MAX_ITERATIONS_WITHOUT_IMPROVEMENT, InitialSolution,
-                LocalImprovement, Destruction, Reconstruction);
+        ig.run();
 
         // Get time after the algorithm
         long endTime = System.currentTimeMillis();
@@ -116,7 +30,7 @@ public class MDSP {
 
     public static void main(String[] args) {
         // Instantiating the parameters
-        String file = "polbooks.txt";
+        String file = "rnd_graph_5000_50_1.txt";
         double REMOVE_VERTICES_PERCENTAGE = 0.2;
         int MAX_ITERATIONS_WITHOUT_IMPROVEMENT = 250;
 
